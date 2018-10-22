@@ -9,43 +9,44 @@ import random
 import numpy as np
 
 
-class base_control():
+class Base_control():
 
 	def __init__(self):
-		self.base_control = rospy.Publisher("/amp_wpi/twist_command", Twist, queue_size=10)
-
-	#control the base with velocity
-	def base_forward_v(self):
-		pass
-
-	def base_backward_v(self):
-		pass
-
-	def base_2_left_v(self):
-		pass
-
-	def base_2_right_v(self):
-		pass
-
-	def base_rotate_v(self):
-		pass
-
+		self.base_pub = rospy.Publisher("/amp_wpi/twist_command", Twist, queue_size=10)
 
 	#control the bse with position
-	def base_forward_p(self):
-		pass
+	def base_x(self, v, t):
+		base = Twist()
+		base.linear.x = v
+		t0 = rospy.Time.now().to_sec()
+		time = t
+		while rospy.Time.now().to_sec() - t0 < t:
+			print "Moving along x_axis..."
+			rospy.loginfo(base)
+			self.base_pub.publish(base)
+		print "Done..."
 
-	def base_backward_p(self):
-		pass
 
-	def base_2_left_p(self):
-		pass
-
-	def base_2_right_p(self):
-		pass
-
-	def base_rotate_p(self):
-		pass
+	def base_y(self, v, t):
+		base = Twist()
+		base.linear.y = v
+		t0 = rospy.Time.now().to_sec()
+		time = t
+		while rospy.Time.now().to_sec() - t0 < t:
+			print "Moving along y_axis..."
+			rospy.loginfo(base)
+			self.base_pub.publish(base)
+		print "Done..."
+	def base_rotate(self, v, t):
+		base = Twist()
+		base.angular.z = v
+		t0 = rospy.Time.now().to_sec()
+		time = t
+		while rospy.Time.now().to_sec() - t0 < t:
+			print "Rotating..."
+			rospy.loginfo(base)
+			self.base_pub.publish(base)
+		print "Done..."
 
 	#base_control demo
 	def base_demo(self):
@@ -54,7 +55,7 @@ class base_control():
 
 def main(args): 
     rospy.init_node('Base_Control', anonymous=True)
-    base_pub = base_control()
+    base = Base_control()
     print 'Ready to control the base...'	
     try:
 	rospy.spin()
@@ -63,16 +64,3 @@ def main(args):
 
 if __name__ == '__main__':
     main(sys.argv)
-
-
-        # base = Twist()
-        # angular_speed = -0.2*PI/180
-        # relative_angle = PI/2
-        # base.linear.x = 0
-        # base.linear.y = 0
-        # base.linear.z = 0
-        # base.angular.x = 0
-        # base.angular.y = 0
-        # base.angular.z = angular_speed
-
-        # t0 = rospy.Time.now().to_sec()
