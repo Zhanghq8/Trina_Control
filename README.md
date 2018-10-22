@@ -1,6 +1,6 @@
 # Trina_Control  
 (1) Hardware configurations:  
-Baxter(hand, camera, dual_arm)  
+Baxter(head, camera, dual_arm)  
 Reflex hand(left and right)  
 Mobile base  
 Realsense(mounted on the Reflex)  
