@@ -54,7 +54,6 @@ class Base_control():
 
 
 def main(args): 
-    rospy.init_node('Base_Control', anonymous=True)
     base = Base_control()
     print 'Ready to control the base...'	
     try:
