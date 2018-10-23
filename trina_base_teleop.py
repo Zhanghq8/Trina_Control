@@ -53,12 +53,12 @@ CTRL-C to quit
 """
 
 moveBindings = {
-        'w':(1,0,0,0),
-        'a':(0,1,0,0),
-        'd':(0,-1,0,0),
-        's':(-1,0,0,0),
-        'q':(0,0,0,-1),
-		'e':(0,0,0,1),
+        'w':(0,-1,0,0),
+        'a':(1,0,0,0),
+        'd':(-1,0,0,0),
+        's':(0,1,0,0),
+        'q':(0,0,0,1),
+		'e':(0,0,0,-1),
         }
 
 
@@ -85,11 +85,11 @@ def vels(speed,turn):
 if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
-    pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size = 1)
+    pub = rospy.Publisher('/amp_wpi/twist_command', Twist, queue_size = 1)
     rospy.init_node('teleop_twist_keyboard')
 
-    speed = rospy.get_param("~speed", 0.5)
-    turn = rospy.get_param("~turn", 1.0)
+    speed = rospy.get_param("~speed", 0.1)
+    turn = rospy.get_param("~turn", 0.1)
     x = 0
     y = 0
     z = 0
@@ -109,6 +109,10 @@ if __name__=="__main__":
             elif key in speedBindings.keys():
                 speed = speed * speedBindings[key][0]
                 turn = turn * speedBindings[key][1]
+                x = 0
+                y = 0
+                z = 0
+                th = 0
 
                 print(vels(speed,turn))
                 if (status == 14):
@@ -126,8 +130,6 @@ if __name__=="__main__":
             twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
             pub.publish(twist)
-            twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
-            twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
 
     except Exception as e:
         print(e)
