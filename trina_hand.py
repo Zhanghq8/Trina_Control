@@ -2,6 +2,7 @@
 
 import rospy
 import roslib
+import time
 from reflex_msgs.msg import Command
 import sys
 import os
@@ -21,43 +22,52 @@ class Hand_control():
 		hand.pose.f1 = 0.0
 		hand.pose.f2 = 0.0
 		hand.pose.f3 = 0.0
-		hand.velocity.f1= 2.0
-		hand.velocity.f2= 2.0
-		hand.velocity.f3= 2.0
+		hand.pose.preshape = 0.0
+		hand.velocity.f1 = 2.0
+		hand.velocity.f2 = 2.0
+		hand.velocity.f3 = 2.0
+		hand.velocity.preshape = 2.0
 		print "Opening hand..."
 		rospy.loginfo(hand)
+		time.sleep(2.0)
 		self.hand_pub.publish(hand)
 		print "Done..."
 
 	def hand_close(self):
 		hand = Command()
-		hand.pose.f1 = 1.0
-		hand.pose.f2 = 1.0
-		hand.pose.f3 = 1.0
-		hand.velocity.f1= 2.0
-		hand.velocity.f2= 2.0
-		hand.velocity.f3= 2.0
+		hand.pose.f1 = 2.2
+		hand.pose.f2 = 2.2
+		hand.pose.f3 = 2.2
+		hand.pose.preshape = 0.0
+		hand.velocity.f1 = 2.0
+		hand.velocity.f2 = 2.0
+		hand.velocity.f3 = 2.0
+		hand.velocity.preshape = 2.0
 		print "Closing hand..."
 		rospy.loginfo(hand)
+		time.sleep(2.0)
 		self.hand_pub.publish(hand)
 		print "Done..."
 
-	def hand_control(self, _f1, _f2, _f3):
+	def hand_control(self, _f1, _f2, _f3, _v):
 		hand = Command()
 		hand.pose.f1 = _f1
 		hand.pose.f2 = _f2
 		hand.pose.f3 = _f3
-		hand.velocity.f1 = 0.2
-		hand.velocity.f2 = 0.2
-		hand.velocity.f3 = 0.2
+		hand.pose.preshape = 0.0
+		hand.velocity.f1 = _v
+		hand.velocity.f2 = _v
+		hand.velocity.f3 = _v
+		hand.velocity.preshape = 2.0
 		print "Grasping..."
+		time.sleep(2.0)
 		rospy.loginfo(hand)
 		self.hand_pub.publish(hand)
 		print "Done..."
 
-	def hand_shape_set(self, shape_angle):
-		hand = Command()
-		hand.pose.preshape = shaple_angle
+	# def hand_shape_set(self, shape_angle):
+	# 	hand = Command()
+	# 	hand.pose.preshape = shaple_angle
 
 	#hand_control demo
 	def hand_demo(self):

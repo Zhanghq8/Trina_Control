@@ -22,7 +22,7 @@ def base_move():
 def hand_control():
     rospy.init_node("Hand_control", disable_signals=True)
     hand_1 = trina_hand.Hand_control()
-    hand_1.hand_control(2, 2, 2)
+    hand_1.hand_control(0.0, 0.0, 0.0, 2.0)
 
 def main():
 	# base_move()
