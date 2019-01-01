@@ -18,7 +18,7 @@ class arm_control:
         self.limb1.move_to_joint_positions(right_angles, timeout=2.5)
         self.limb2.move_to_joint_positions(left_angles, timeout=2.5)
 
-    def move_rightarm(self, s0, s1, w0, w1, w2, e0, e1):
+    def move_rightarm(self):
         move_angle = {'right_s0': -1.4442429117941171, 'right_s1': 0.2519563444101792, 'right_w0': 1.2570972556720965, 'right_w1': 0.6197282383057071, 'right_w2': 1.750272078977257, 'right_e0': -0.5530000740326917, 'right_e1': -0.0502378708032473}
         self.limb1.move_to_joint_positions(move_angle, timeout=2.5)
 
